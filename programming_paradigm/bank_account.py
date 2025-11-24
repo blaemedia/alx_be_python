@@ -18,5 +18,5 @@ class BankAccount:
         return False
 
     def display_balance(self):
-        """Print the current balance."""
-        print(f"Current Account Balance: ₦{self.account_balance}")
+        """Print the current balance (includes 'Current Balance:' as required)."""
+        print("Current Balance: ₦" + str(self.account_balance))
