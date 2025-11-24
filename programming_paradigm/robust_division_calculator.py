@@ -1,5 +1,5 @@
 def safe_divide(numerator, denominator):
-    
+   
     try:
         # Attempt to convert inputs to floats
         num = float(numerator)
@@ -12,4 +12,4 @@ def safe_divide(numerator, denominator):
         result = num / den
         return result
     except ZeroDivisionError:
-        return "Error: Cannot divide by zero"
+        return "Error: Cannot divide by zero."
