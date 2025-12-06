@@ -12,9 +12,13 @@ class Book:
         self.title = title
         self.author = author
     
+    def __str__(self):
+        """String representation of the book"""
+        return f"'{self.title}' by {self.author}"
+    
     def get_info(self):
         """Return basic book information as a string"""
-        return f"'{self.title}' by {self.author}"
+        return str(self)
 
 
 class EBook(Book):
@@ -33,10 +37,13 @@ class EBook(Book):
         super().__init__(title, author)
         self.file_size = file_size
     
+    def __str__(self):
+        """String representation of the ebook"""
+        return f"{super().__str__()} [EBook, Size: {self.file_size}KB]"
+    
     def get_info(self):
         """Return ebook information including file size"""
-        base_info = super().get_info()
-        return f"{base_info} [EBook, Size: {self.file_size}KB]"
+        return str(self)
 
 
 class PrintBook(Book):
@@ -47,6 +54,7 @@ class PrintBook(Book):
         Initialize a print book with title, author, and page count
         
         Args:
+:
             title (str): The title of the book
             author (str): The author of the book
             page_count (int): The number of pages
@@ -55,10 +63,13 @@ class PrintBook(Book):
         super().__init__(title, author)
         self.page_count = page_count
     
+    def __str__(self):
+        """String representation of the print book"""
+        return f"{super().__str__()} [Print Book, Pages: {self.page_count}]"
+    
     def get_info(self):
         """Return print book information including page count"""
-        base_info = super().get_info()
-        return f"{base_info} [Print Book, Pages: {self.page_count}]"
+        return str(self)
 
 
 class Library:
@@ -74,6 +85,10 @@ class Library:
         self.name = name
         self.books = []  # This demonstrates composition - Library HAS-A collection of Books
     
+    def __str__(self):
+        """String representation of the library"""
+        return f"Library: {self.name} ({len(self.books)} books)"
+    
     def add_book(self, book):
         """
         Add a book to the library collection
@@ -85,7 +100,7 @@ class Library:
             raise TypeError(f"Cannot add object of type {type(book).__name__}. Must be a Book, EBook, or PrintBook.")
         
         self.books.append(book)
-        print(f"Added: {book.get_info()}")
+        print(f"Added: {book}")
     
     def list_books(self):
         """Print details of all books in the library"""
@@ -95,7 +110,7 @@ class Library:
         
         print(f"\n=== Books in '{self.name}' Library ===\n")
         for i, book in enumerate(self.books, 1):
-            print(f"{i}. {book.get_info()}")
+            print(f"{i}. {book}")
         print(f"\nTotal books: {len(self.books)}")
     
     def get_books_by_type(self):
