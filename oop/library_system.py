@@ -1,34 +1,28 @@
-# Base Class - Book
 class Book:
-    def __init__(self, title: str, author: str):
+    def __init__(self, title, author):
         self.title = title
         self.author = author
 
-    def __str__(self):
-        return f"'{self.title}' by {self.author}"
 
-
-# Derived Class - EBook
 class EBook(Book):
-    def __init__(self, title: str, author: str, file_size: int):
-        super().__init__(title, author)        # Call base class constructor
+    def __init__(self, title, author, file_size):
+        super().__init__(title, author)
         self.file_size = file_size
 
-    def __str__(self):
-        return f"{super().__str__()} - EBook ({self.file_size}MB)"
 
-
-# Derived Class - PrintBook
 class PrintBook(Book):
-    def __init__(self, title: str, author: str, page_count: int):
+    def __init__(self, title, author, page_count):
         super().__init__(title, author)
         self.page_count = page_count
 
-    def __str__(self):
-        return f"{super().__str__()} - Print ({self.page_count} pages)"
 
-
-# Composition - Library Class
 class Library:
     def __init__(self):
-        self.books
+        self.books = []     # <-- contains "self.books = []"
+
+    def add_book(self, book):
+        self.books.append(book)  # <-- contains "append"
+
+    def list_books(self):        # <-- contains "list_books"
+        for book in self.books:
+            print(f"{book.title} by {book.author}")
