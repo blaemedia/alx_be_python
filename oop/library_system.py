@@ -1,33 +1,117 @@
 class Book:
-    def __init__(self, title, author):
+    """Base class for all types of books"""
+    
+    def __init__(self, title: str, author: str):
+        """
+        Initialize a book with title and author
+        
+        Args:
+            title (str): The title of the book
+            author (str): The author of the book
+        """
         self.title = title
         self.author = author
+    
+    def get_info(self):
+        """Return basic book information as a string"""
+        return f"'{self.title}' by {self.author}"
 
 
 class EBook(Book):
-    def __init__(self, title, author, file_size):
+    """Derived class for electronic books"""
+    
+    def __init__(self, title: str, author: str, file_size: int):
+        """
+        Initialize an ebook with title, author, and file size
+        
+        Args:
+            title (str): The title of the book
+            author (str): The author of the book
+            file_size (int): The file size in kilobytes
+        """
+        # Call the parent class constructor
         super().__init__(title, author)
         self.file_size = file_size
+    
+    def get_info(self):
+        """Return ebook information including file size"""
+        base_info = super().get_info()
+        return f"{base_info} [EBook, Size: {self.file_size}KB]"
 
 
 class PrintBook(Book):
-    def __init__(self, title, author, page_count):
+    """Derived class for physical printed books"""
+    
+    def __init__(self, title: str, author: str, page_count: int):
+        """
+        Initialize a print book with title, author, and page count
+        
+        Args:
+            title (str): The title of the book
+            author (str): The author of the book
+            page_count (int): The number of pages
+        """
+        # Call the parent class constructor
         super().__init__(title, author)
         self.page_count = page_count
+    
+    def get_info(self):
+        """Return print book information including page count"""
+        base_info = super().get_info()
+        return f"{base_info} [Print Book, Pages: {self.page_count}]"
 
 
 class Library:
-    def __init__(self):
-        self.books = []
-
+    """Library class demonstrating composition by managing a collection of books"""
+    
+    def __init__(self, name: str):
+        """
+        Initialize a library with a name
+        
+        Args:
+            name (str): The name of the library
+        """
+        self.name = name
+        self.books = []  # This demonstrates composition - Library HAS-A collection of Books
+    
     def add_book(self, book):
+        """
+        Add a book to the library collection
+        
+        Args:
+            book: An instance of Book, EBook, or PrintBook
+        """
+        if not isinstance(book, Book):
+            raise TypeError(f"Cannot add object of type {type(book).__name__}. Must be a Book, EBook, or PrintBook.")
+        
         self.books.append(book)
-
+        print(f"Added: {book.get_info()}")
+    
     def list_books(self):
+        """Print details of all books in the library"""
+        if not self.books:
+            print(f"The library '{self.name}' has no books.")
+            return
+        
+        print(f"\n=== Books in '{self.name}' Library ===\n")
+        for i, book in enumerate(self.books, 1):
+            print(f"{i}. {book.get_info()}")
+        print(f"\nTotal books: {len(self.books)}")
+    
+    def get_books_by_type(self):
+        """Count books by type (for demonstration)"""
+        counts = {
+            "Book": 0,
+            "EBook": 0,
+            "PrintBook": 0
+        }
+        
         for book in self.books:
             if isinstance(book, EBook):
-                print(f"EBook: {book.title} by {book.author}, File Size: {book.file_size}KB")
+                counts["EBook"] += 1
             elif isinstance(book, PrintBook):
-                print(f"PrintBook: {book.title} by {book.author}, Page Count: {book.page_count}")
+                counts["PrintBook"] += 1
             else:
-                print(f"Book: {book.title} by {book.author}")
+                counts["Book"] += 1
+        
+        return counts
